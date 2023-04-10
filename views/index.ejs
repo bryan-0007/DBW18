@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+        <link rel="stylesheet" href="logReg.css" />
+        <title>Perfil de utilizador</title>
+    </head>
+    <body>
+        <%- include('./partials/nav_header_agente') %>
+        <div
+            class="container-xl rounded bg-white mt-5 mb-5"
+            style="position: relative; bottom: 30px"
+        >
+            <div class="row">
+                <div class="col-md-3 border-right">
+                    <div
+                        class="d-flex flex-column align-items-center text-center p-3 py-5"
+                    >
+                        <img
+                            class="rounded-circle mt-5"
+                            width="150px"
+                            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                        /><span class="font-weight-bold"><%=name%></span
+                        ><span class="text-black-60"><%=email%></span
+                        ><span class="text-black-50"
+                            >Tickets
+                            resolvidos:&nbsp;<%=n_tickets_agente%></span
+                        >
+                    </div>
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <button
+                            class="button-blue"
+                            type="submit"
+                            style="position: relative; left: 8px; bottom: 30px"
+                        >
+                            LOGOUT
+                        </button>
+                    </form>
+                    <div class="p-3 py-1">
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h5 class="text-right">Mensagens do agente</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <%agente.forEach(mensagem=>{%>
+                            <li class="list-group-item"> <%= mensagem %> 
+                                <form
+                                                    action="/deleteMensagem/<%=mensagem%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta mensagem?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                            </li>
+                            <% }) %> 
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 border-right">
+                    <div class="p-3 py-5">
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right">Criação de Mensagens</h4>
+                        </div>
+                        <form action="/" method="POST">
+                            <div class="row mt-2" id="mensagemPreDefenida">
+                                <div class="col-md-12">
+                                    <label class="labels"
+                                        >Mensagens Pré-Definidas:</label
+                                    ><input
+                                        id="preMensagem1"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Mensagem"
+                                        name="mensagens"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mt-4 text-center" id="mensagemDasFaqs">
+                                <select value="" name="fuiFaq" id="Faqs1" class="form-select" aria-label="Default select example" type="name">
+                                    <option selected disabled value="">Respostas Das Faqs</option>
+                                    <%var counter=0%>
+                                    <%respostasdasFaqs.forEach(resposta=>{%>
+                                    <%counter=counter+1%>
+                                    <% if(resposta.Resposta != "" ) { %>
+                                    <option id="<%=counter%>faq" value="<%=resposta.Resposta%>">
+                                        <%=resposta.Resposta%>
+                                    </option>
+                                    <% } %>
+                                    <%})%>
+                                </select>
+                            </div>
+                            <div class="mt-4 text-center" id="mensagemDosTickets">
+                                <select value="" name="fuiTicket" id="Tickets1" class="form-select" aria-label="Default select example" type="name">
+                                    <option selected disabled value="">Respostas Dos Tickets</option>
+                                    <%var counter=0%>
+                                    <%respostaTickets2.forEach(respostaTickets=>{%>
+                                    <%counter=counter+1%>
+                                    <% if(respostaTickets.Resposta != "" &&  respostaTickets.Resposta != undefined) { %>
+                                    <option id="<%=counter%>ticket" value="<%=respostaTickets.Resposta%>">
+                                        <%=respostaTickets.Resposta%>
+                                    </option>
+                                    <% } %> 
+                                    <%})%>
+                                </select>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <button
+                                    class="btn btn-primary profile-button"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="p-3 py-1">
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right">Profile Settings</h4>
+                        </div>
+                        <form class="needs-validation" action="/profile" method="POST" onsubmit="return confirm('Quer mesmo mudar os dados da conta?')">
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <div class="form-group was-validated">
+                                        <label class="labels"
+                                            >Nome:</label
+                                        ><input
+                                            type="name"
+                                            class="form-control"
+                                            placeholder=<%=name%> 
+                                            name="name"
+                                            value=<%=name%>
+                                            required
+                                        />
+                                        <div class="invalid-feedback" style="font-weight: bold">
+                                            *Please enter your name
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <div class="form-group was-validated">
+                                        <label class="labels"
+                                            >Email:</label
+                                        ><input
+                                            type="email"
+                                            class="form-control"
+                                            placeholder=<%=email%>
+                                            name="email"
+                                            value=<%=email%>
+                                            required
+                                        />
+                                        <div class="invalid-feedback" style="font-weight: bold">
+                                            *Please enter your email
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <div class="form-group was-validated">
+                                        <label class="labels"
+                                            >Password:</label
+                                        ><input
+                                            type="password"
+                                            class="form-control"
+                                            placeholder="* * * * * * *"
+                                            name="password"
+                                            required
+                                        />
+                                        <div class="invalid-feedback" style="font-weight: bold">
+                                            *Please enter your password
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <button
+                                    class="btn btn-primary profile-button"
+                                    type="submit"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="p-3 py-5">
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right">Tickets Fechados do Agente</h4>
+                        </div>
+                        <div class="row mt-12">
+                            <div class="accordion" id="accordionExample1">
+                                <%var counter=0%> <%tickets_fechados.forEach(ticket=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingOne<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne<%=counter%>"
+                                        >
+                                            <strong>Titulo:</strong
+                                            >&nbsp;<%=ticket.Titulo%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseOne<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne<%=counter%>"
+                                        data-bs-parent="#accordionExample1"
+                                    >
+                                        <div class="accordion-body">
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Agente designado:</strong
+                                            >&nbsp;<%=ticket.Agente.name%>
+                                            </p>
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Descrição:</strong
+                                            >&nbsp;<%=ticket.Descricao%>
+                                            </p>
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=ticket.Resposta%>
+                                            </p>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/ticket_update/<%=ticket.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/deleteTicket/<%=ticket.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 py-1">
+                        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right">Tickets Abertos</h4>
+                        </div>
+                        <div class="row mt-12">
+                            <div class="accordion" id="accordionExample1">
+                                <%var counter=0%> <%tickets_abertos.forEach(ticket=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingOne<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne<%=counter%>"
+                                        >
+                                            <strong>Titulo:</strong
+                                            >&nbsp;<%=ticket.Titulo%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseOne<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne<%=counter%>"
+                                        data-bs-parent="#accordionExample1"
+                                    >
+                                        <div class="accordion-body">
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Agente designado:</strong
+                                            >&nbsp;
+                                            <%if(ticket.Agente == undefined){ %> 
+                                                Pool partilhada
+                                            <% } %>
+                                            <%if(ticket.Agente != undefined){ %>
+                                                <%=ticket.Agente.name%> 
+                                            <% } %>
+                                            </p>
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Descrição:</strong
+                                            >&nbsp;<%=ticket.Descricao%>
+                                            </p>
+                                            <p>
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=ticket.Resposta%>
+                                            </p>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/ticket_update/<%=ticket.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/deleteTicket/<%=ticket.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                    <%if (ticket.Agente == undefined){  %>
+                                                    <input type="hidden" name="Agente" value="">
+                                                    <% } %>
+                                                    <%if (ticket.Agente != undefined){  %>
+                                                    <input type="hidden" name="Agente" value=<%= ticket.Agente.name %> >
+                                                    <% } %>
+                                                    Apagar
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <script>
+        
+            var preMensagem=document.getElementById("preMensagem1")
+            var faqs1=document.getElementById("Faqs1")
+            var tickets1=document.getElementById("Tickets1")
+            //PROBLEMAS PARA O FUTURO :-()
+            preMensagem.addEventListener("focus",()=>{
+                faqs1.setAttribute("disabled","")
+                tickets1.setAttribute("disabled","")
+            })
+            preMensagem.addEventListener("blur",()=>{
+                faqs1.toggleAttribute("disabled")
+                tickets1.toggleAttribute("disabled")
+            })
+
+            faqs1.addEventListener("focus",()=>{
+                preMensagem.setAttribute("disabled","")
+                tickets1.setAttribute("disabled","")
+            })
+            faqs1.addEventListener("blur",()=>{
+                preMensagem.toggleAttribute("disabled")
+                tickets1.toggleAttribute("disabled")
+            })
+
+            tickets1.addEventListener("focus",()=>{
+                preMensagem.setAttribute("disabled","")
+                faqs1.setAttribute("disabled","")
+            })
+            tickets1.addEventListener("blur",()=>{
+                preMensagem.toggleAttribute("disabled")
+                faqs1.toggleAttribute("disabled")
+            })
+
+        </script>
+
+        <%- include('./partials/nav_footer.ejs') %>
+    </body>
+</html>

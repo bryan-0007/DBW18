@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+        <title>FAQ</title>
+        <link rel="stylesheet" href="logReg.css" />
+        <style>
+            .btn-group {
+                margin-left: 600px;
+            }
+            .btn-lg:hover{
+                color:#354eb5 !important;
+            }
+        </style>
+    </head>
+    <body>
+        <%- include('./partials/nav_header_agente') %>
+        <div
+            class="container-xll rounded mt-5 mb-5"
+            style="position: relative; bottom: 30px; background-color: #354eb5;"
+        >
+        <br>
+        <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right" style="color: white; margin-left: 20px">Faqs Fechados</h4>
+                        </div>
+            <a href="/faq_create">
+                <button type="button" class="btn btn-outline-light btn-lg" style="margin-left:20px">
+                    Create Faq
+                </button>
+            </a>
+            <br />
+            <br />
+            <div class="accordion accordion-flush" id="accordionFlushExample1">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseOne"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Enviar
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseOne"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample1"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample1">
+                                <%var counter=0%> <%faqs.forEach(faq_enviar=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_enviar.Prioritário == true) {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingOne<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_enviar.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseOne<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne<%=counter%>"
+                                        data-bs-parent="#accordionExample1"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_enviar.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_enviar.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_enviar.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+
+                                                <form
+                                                    action="/pinned/<%=faq_enviar.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------Acordiao 2----------------------------------------------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample2">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseTwo"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Receber
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseTwo"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingTwo"
+                        data-bs-parent="#accordionFlushExample2"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample2">
+                                <% var counter=0%> <%
+                                faqs1.forEach(faq_receber=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_receber.Prioritário == true) {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingTwo<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseTwo<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseTwo<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_receber.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseTwo<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingTwo<%=counter%>"
+                                        data-bs-parent="#accordionExample2"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_receber.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_receber.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_receber.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_receber.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---Acordiao 3 ------------------------------------------------------------------------>
+            <div class="accordion accordion-flush" id="accordionFlushExample3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseThree"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Pagamentos e
+                            Portagens
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseThree"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree"
+                        data-bs-parent="#accordionFlushExample3"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample3">
+                                <% var counter=0%> <%
+                                faqs2.forEach(faq_pagamentos=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_pagamentos.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingThree<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseThree<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_pagamentos.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseThree<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingThree<%=counter%>"
+                                        data-bs-parent="#accordionExample3"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_pagamentos.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_pagamentos.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_pagamentos.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_pagamentos.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------------------------------------Acordiao 4--------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample4">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseFour"
+                        >
+                            <strong>Categoria:</strong> &nbsp;Transferencia de
+                            Dinheiro
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseFour"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingFour"
+                        data-bs-parent="#accordionFlushExample4"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample4">
+                                <% var counter=0%> <%
+                                faqs3.forEach(faq_Transferencia=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_Transferencia.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingFour<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFour<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseFour<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong>
+                                            &nbsp;<%=faq_Transferencia.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFour<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingFour<%=counter%>"
+                                        data-bs-parent="#accordionExample4"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >
+                                            &nbsp;<%=faq_Transferencia.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_Transferencia.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_Transferencia%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_Transferencia.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---------Acordiao 5 ------------------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample5">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFive">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseFive"
+                        >
+                            <strong>Categoria:</strong> &nbsp; Importações de
+                            desenfandegamento
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseFive"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingFive"
+                        data-bs-parent="#accordionFlushExample5"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample5">
+                                <% var counter=0%> <%
+                                faqs4.forEach(faq_importacoe=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_importacoe.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingFive<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFive<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseFive<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_importacoe.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFive<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingFive<%=counter%>"
+                                        data-bs-parent="#accordionExample5"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_importacoe.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_importacoe.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_importacoe.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_importacoe.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div
+                            class="d-flex justify-content-between align-items-center mb-3"
+                        >
+                            <h4 class="text-right" style="color: white; margin-left: 20px">Faqs Abertos</h4>
+            </div>
+            <div class="accordion accordion-flush" id="accordionFlushExample11">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne1">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne1"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseOne1"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Enviar
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseOne1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingOne1"
+                        data-bs-parent="#accordionFlushExample11"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample11">
+                                <%var counter=0%> <%faqs_aberto.forEach(faq_enviar=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_enviar.Prioritário == true) {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingOne1<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne1<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne1<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_enviar.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseOne1<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne1<%=counter%>"
+                                        data-bs-parent="#accordionExample11"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_enviar.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_enviar.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_enviar.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+
+                                                <form
+                                                    action="/pinned/<%=faq_enviar.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------Acordiao 2----------------------------------------------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample21">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo1">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo1"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseTwo1"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Receber
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseTwo1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingTwo1"
+                        data-bs-parent="#accordionFlushExample21"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample21">
+                                <% var counter=0%> <%
+                                faqs_aberto1.forEach(faq_receber=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_receber.Prioritário == true) {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingTwo1<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseTwo1<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseTwo1<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_receber.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseTwo<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingTwo1<%=counter%>"
+                                        data-bs-parent="#accordionExample21"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_receber.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_receber.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_receber.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_receber.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---Acordiao 3 ------------------------------------------------------------------------>
+            <div class="accordion accordion-flush" id="accordionFlushExample31">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree1">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree1"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseThree1"
+                        >
+                            <strong>Categoria:</strong>&nbsp;Pagamentos e
+                            Portagens
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseThree1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree1"
+                        data-bs-parent="#accordionFlushExample31"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample31">
+                                <% var counter=0%> <%
+                                faqs_aberto2.forEach(faq_pagamentos=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_pagamentos.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingThree1<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseThree1<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseThree1<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_pagamentos.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseThree1<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingThree1<%=counter%>"
+                                        data-bs-parent="#accordionExample31"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_pagamentos.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_pagamentos.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_pagamentos.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_pagamentos.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----------------------------------------------Acordiao 4--------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample41">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFour1">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour1"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseFour1"
+                        >
+                            <strong>Categoria:</strong> &nbsp;Transferencia de
+                            Dinheiro
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseFour1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingFour1"
+                        data-bs-parent="#accordionFlushExample41"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample41">
+                                <% var counter=0%> <%
+                                faqs_aberto3.forEach(faq_Transferencia=>{%>
+                                <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_Transferencia.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingFour1<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFour1<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseFour1<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong>
+                                            &nbsp;<%=faq_Transferencia.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFour1<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingFour1<%=counter%>"
+                                        data-bs-parent="#accordionExample41"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >
+                                            &nbsp;<%=faq_Transferencia.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_Transferencia.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_Transferencia%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_Transferencia.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---------Acordiao 5 ------------------------------->
+            <div class="accordion accordion-flush" id="accordionFlushExample51">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingFive1">
+                        <button
+                            class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive1"
+                            aria-expanded="false"
+                            aria-controls="flush-collapseFive1"
+                        >
+                            <strong>Categoria:</strong> &nbsp; Importações de
+                            desenfandegamento
+                        </button>
+                    </h2>
+                    <div
+                        id="flush-collapseFive1"
+                        class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingFive1"
+                        data-bs-parent="#accordionFlushExample51"
+                    >
+                        <div class="accordion-body">
+                            <div class="accordion" id="accordionExample51">
+                                <% var counter=0%> <%
+                                faqs_aberto4.forEach(faq_importacoe=>{%> <%counter+=1%>
+                                <div class="accordion-item">
+                                    <% if(faq_importacoe.Prioritário == true)
+                                    {%>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        class="bi bi-pin-angle-fill"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            d="M9.828.722a.5.5 0 0 1 .354.146l4.95 4.95a.5.5 0 0 1 0 .707c-.48.48-1.072.588-1.503.588-.177 0-.335-.018-.46-.039l-3.134 3.134a5.927 5.927 0 0 1 .16 1.013c.046.702-.032 1.687-.72 2.375a.5.5 0 0 1-.707 0l-2.829-2.828-3.182 3.182c-.195.195-1.219.902-1.414.707-.195-.195.512-1.22.707-1.414l3.182-3.182-2.828-2.829a.5.5 0 0 1 0-.707c.688-.688 1.673-.767 2.375-.72a5.922 5.922 0 0 1 1.013.16l3.134-3.133a2.772 2.772 0 0 1-.04-.461c0-.43.108-1.022.589-1.503a.5.5 0 0 1 .353-.146z"
+                                        />
+                                    </svg>
+                                    <% } %>
+                                    <h2
+                                        class="accordion-header"
+                                        id="headingFive1<%=counter%>"
+                                    >
+                                        <button
+                                            class="accordion-button"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFive1<%=counter%>"
+                                            aria-expanded="true"
+                                            aria-controls="collapseFive1<%=counter%>"
+                                        >
+                                            <strong>Pergunta:</strong
+                                            >&nbsp;<%=faq_importacoe.Pergunta%>
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFive1<%=counter%>"
+                                        class="accordion-collapse collapse show"
+                                        aria-labelledby="headingFive1<%=counter%>"
+                                        data-bs-parent="#accordionExample51"
+                                    >
+                                        <div class="accordion-body">
+                                            <strong style="color: #dc8b25"
+                                                >Resposta:</strong
+                                            >&nbsp;<%=faq_importacoe.Resposta%>
+                                            <div
+                                                class="btn-group btn-group-sm"
+                                                role="group"
+                                                aria-label="Basic example"
+                                            >
+                                                <a
+                                                    href="/faq_update/<%=faq_importacoe.id%>"
+                                                >
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-warning"
+                                                        id="botao_de_Editar"
+                                                    >
+                                                        Editar
+                                                    </button>
+                                                </a>
+                                                <form
+                                                    action="/<%=faq_importacoe.id%>?_method=DELETE"
+                                                    method="POST"
+                                                    onsubmit="return confirm('Quer mesmo remover esta faq?')"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-danger"
+                                                        id="botao_de_Apagar"
+                                                    >
+                                                        Apagar
+                                                    </button>
+                                                </form>
+                                                <form
+                                                    action="/pinned/<%=faq_importacoe.id%>"
+                                                    method="POST"
+                                                >
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-secondary btn-dark"
+                                                        id="botao_de_Pinned"
+                                                    >
+                                                        Pinned
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%})%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+        </div>
+        <%- include('./partials/nav_footer') %>
+    </body>
+</html>

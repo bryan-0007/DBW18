@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+        <link rel="stylesheet" href="logReg.css" />
+        <title>Create FAQ</title>
+    </head>
+    <body>
+        <%- include('./partials/nav_header_agente') %>
+        <div class="content">
+            <div class="main" style="margin: 20px !important">
+                <h1 style="margin-bottom: 0px !important">
+                    <strong>Create FAQ</strong>
+                </h1>
+                <form
+                    class="needs-validation"
+                    action="/faq_create"
+                    method="POST"
+                >
+                    <div class="form-group">
+                        <label class="form-label" for="pergunta">Pergunta:</label>
+                        <input
+                            class="form-control"
+                            id="pergunta"
+                            type="name"
+                            name="Pergunta"
+                            placeholder="Pergunta a fazer"
+                            value=""
+                        />
+                    </div>
+                    <div class="form-group was-validated">
+                        <label class="form-label" for="resposta"
+                            >Resposta:</label
+                        >
+                        <input
+                            class="form-control"
+                            id="resposta"
+                            type="name"
+                            name="Resposta"
+                            placeholder="Uma pergunta pertinente"
+                            required
+                        />
+                        <div class="invalid-feedback" style="font-weight: bold">
+                            *Please enter your response
+                        </div>
+                    </div>
+                    <div class="form-group was-validated">
+                        <label for="validationCustom04" class="form-label"
+                            >Categoria:</label
+                        >
+                        <select
+                            style="
+                                position: relative;
+                                right: 5px;
+                                padding: 7px;
+                                margin-top: 0px;
+                            "
+                            id="validationCustom04"
+                            type="name"
+                            name="Categoria"
+                        >
+                            <option
+                                selected
+                                disabled
+                                value=""
+                                style="font-weight: lighter"
+                            >
+                                Choose an Category...
+                            </option>
+                            <option style="font-weight: lighter">Enviar</option>
+                            <option style="font-weight: lighter">
+                                Receber
+                            </option>
+                            <option style="font-weight: lighter">
+                                Pagamentos e Portagens
+                            </option>
+                            <option style="font-weight: lighter">
+                                Transferência de dinheiro
+                            </option>
+                            <option style="font-weight: lighter">
+                                Importações e desenfandegamento
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <button
+                        class="button-blue"
+                        style="margin-top: 0px !important"
+                    >
+                        SUBMIT
+                    </button>
+                </form>
+            </div>
+        </div>
+        <%- include('./partials/nav_footer') %>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<nav
+    class="navbar navbar-expand-lg navbar-light bg-light"
+    style="opacity: 0.8;"
+>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="ParaImg" style="padding-right: 15px">
+                <a
+                    data-attr="img"
+                    class="nav-link"
+                    href="/home"
+                    rel="prev"
+                    target="_self"
+                    ><img src="SigaMail (2).png" alt="home"
+                /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/faq">FAQ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/atendimento">Atendimento</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/tickets">Tickets</a>
+            </li>
+            <li>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ticket-detailed-fill" viewBox="0 0 16 16" style="color: green; position: relative; top: 2px; height: 38px; width: 32px; padding-left: 10px;">
+                    <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6a.5.5 0 0 1-.5.5 1.5 1.5 0 0 0 0 3 .5.5 0 0 1 .5.5v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5V10a.5.5 0 0 1 .5-.5 1.5 1.5 0 1 0 0-3A.5.5 0 0 1 0 6V4.5Zm4 1a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5Zm0 5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1h-7a.5.5 0 0 0-.5.5ZM4 8a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H5a1 1 0 0 0-1 1Z"/>
+                </svg>
+                <%= n_tickets_por_responder %> 
+            </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+            <input
+                class="form-control mr-sm-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+            />
+            <button
+                type="submit"
+                style="
+                    border: 0px;
+                    padding-right: 30px;
+                    padding: left 0px;
+                    background-color: #f8f9fa;
+                "
+            >
+                <img class="ParaImg" src="search-icon.png" alt="search icon" />
+            </button>
+            <a
+                class="ParaImg"
+                href="/login"
+                rel="prev"
+                target="_self"
+                style="padding-right: 10px"
+                ><img src="icon-body.png" alt="login"
+            /></a>
+        </form>
+    </div>
+</nav>

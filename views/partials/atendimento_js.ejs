@@ -1,0 +1,191 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    var socket = io();
+    var todas_as_mensagens_client = [];
+
+    var botaoEnviarMensagem = document.getElementById("enviar_mensagem");
+    var inputDaMensagem = document.getElementById("input_da_mensagem");
+    var mensagemParaContentor = document.getElementById(
+        "contentor_de_mensagem"
+    );
+    var buscarDescricaoCanvas = document.getElementById(
+        "exampleInputPassword2"
+    );
+    var botaoApagaMensagem = document.getElementById("apaga_mensagem_enviada");
+    var contentorDaMensagem = document.getElementById(
+        `mensagem_enviada_${todas_as_mensagens_client.length}`
+    );
+    //var botao_de_sorrir=document.getElementById("emoji_sorrir");Em principio nao vou precisar
+    //var botao_do_beijo=document.getElementById("emoji_beijo");
+    //var botao_de_rir=document.getElementById("emoji_rir");
+
+    const nome = prompt("Qual é o username?");
+
+    if (nome == undefined || nome == "") {
+        alert("Invalid username inserted");
+        window.location.reload();
+    }
+
+    socket.emit("new-user", nome);
+
+    socket.on("chat-message", (data) => {
+        appendMessage(`${data.name}: ${data.message}`);
+    });
+
+    socket.on("user-conection", (nome) => {
+        appendMessage_conected_disconected(`${nome} conected`);
+    });
+
+    socket.on("user-disconected", (nome) => {
+        appendMessage_conected_disconected(`${nome} disconected`);
+    });
+
+    //botaoApagaMensagem.addEventListener("click",elimina_menssagens);
+
+    botaoEnviarMensagem.addEventListener("click", (e) => {
+        e.preventDefault();
+        var message = inputDaMensagem.value;
+        appendMessage(`You: ${message}`);
+        socket.emit("send-chat-message", message);
+        todas_as_mensagens_client.push(message); //tenho aqui armazenado todas as mensagens que este utilizador enviou
+        inputDaMensagem.value = "";
+        console.log(todas_as_mensagens_client);
+    });
+
+    function appendMessage(message) {
+        var messageElement = document.createElement("div");
+        messageElement.id = `mensagem_enviada_${todas_as_mensagens_client.length}`;
+        messageElement.innerText = message;
+        mensagemParaContentor.append(messageElement);
+        //-------------------------------------REMOÇÃO de butão aqui
+        var btn = document.createElement("button");
+        btn.id = `mensagem_enviada_${todas_as_mensagens_client.length}`;
+        btn.innerHTML = "X";
+        btn.style.background = "white";
+        btn.style.width = "25px";
+        btn.onclick = function () {
+            btn.remove();
+            messageElement.remove();
+            btn_editar.remove();
+            btn_ticket.remove();
+            btn_doispontos.remove();
+        };
+        btn.type = "button";
+        mensagemParaContentor.append(btn);
+        //----------------------------------------EDIÇÃO de butão aqui
+        var btn_editar = document.createElement("button");
+        btn_editar.id = `mensagem_enviada_${todas_as_mensagens_client.length}`;
+        btn_editar.innerHTML = "Editar";
+        btn_editar.style.background = "white";
+        btn_editar.style.width = "55px";
+        btn_editar.onclick = function () {
+            var mensagem_editada = prompt("Escreva a nova mensagem:");
+            messageElement.innerText = "You: " + mensagem_editada; // quando isto acontece preciso de voltar a reenviar a mensagem para o outro utilizador resolver este BUG !!!!
+        };
+        btn_editar.type = "button";
+        mensagemParaContentor.append(btn_editar);
+        //-------------------------------------Criação de botao :
+
+        var btn_doispontos = document.createElement("button");
+        btn_doispontos.id = `mensagem_enviada_${todas_as_mensagens_client.length}`;
+        btn_doispontos.innerHTML = ":";
+        btn_doispontos.style.background = "white";
+        btn_doispontos.style.width = "35px";
+        //btn_doispontos.setAttribute("class","btn btn-primary")
+        btn_doispontos.setAttribute("data-bs-toggle", "offcanvas");
+        btn_doispontos.setAttribute("data-bs-target", "#offcanvasWithBackdrop");
+        btn_doispontos.setAttribute("aria-controls", "offcanvasWithBackdrop");
+        btn_doispontos.setAttribute("type", "button");
+        btn_doispontos.onclick = function () {
+            //aqui adiciono ao canvas
+            const email = prompt("Terá de escrever o seu email para avançar.");
+            var regex = /^\S+@\S+\.\S+$/;
+            if (regex.test(email) === false) {
+                alert("Invalid email address inserted");
+                window.location.reload();
+            }
+        };
+        btn_doispontos.type = "button";
+        mensagemParaContentor.append(btn_doispontos);
+        //-------------------------------------Criação de butao para off canvas de ticket
+
+        var btn_ticket = document.createElement("button");
+        btn_ticket.id = `mensagem_enviada_${todas_as_mensagens_client.length}`;
+        btn_ticket.innerHTML = "Descrição";
+        btn_ticket.style.background = "white";
+        btn_ticket.style.width = "80px";
+        //btn_ticket.setAttribute("class","btn btn-primary")
+        btn_ticket.setAttribute("data-bs-toggle", "offcanvas");
+        btn_ticket.setAttribute("data-bs-target", "#offcanvasWithBackdrop");
+        btn_ticket.setAttribute("aria-controls", "offcanvasWithBackdrop");
+        btn_ticket.setAttribute("type", "button");
+        btn_ticket.onclick = function () {
+            //aqui adiciono ao canvas
+            const email = prompt("Terá de escrever o seu email para avançar.");
+            var regex = /^\S+@\S+\.\S+$/;
+            if (regex.test(email) === false) {
+                alert("Invalid email address inserted");
+                window.location.reload();
+            }
+            var temOvalorDaMensagem = messageElement.innerText;
+            buscarDescricaoCanvas.value = temOvalorDaMensagem;
+            //console.log(messageElement.innerText)
+            //console.log(buscarDescricaoCanvas.innerText)
+        };
+        mensagemParaContentor.append(btn_ticket);
+    }
+
+    function appendMessage_conected_disconected(message) {
+        var messageElement = document.createElement("div");
+        //messageElement.id=`mensagem_enviada_${todas_as_mensagens_client.length}`
+        messageElement.innerText = message;
+        mensagemParaContentor.append(messageElement);
+    }
+
+    //---------------------------------------------------EMOJIS----------------------------------------
+    $(document).ready(function () {
+        $("#emoji_sorrir").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji; // tem aqui um bug se eu escrever primeiro e depois meter o emote o texto desaparee preciso de resolver provavel preciso criar varias tipos de variaveis de mensagem
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+        $("#emoji_beijo").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji;
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+        $("#emoji_rir").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji;
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+        $("#pre_mensagem1").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji;
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+        $("#pre_mensagem2").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji;
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+        $("#pre_mensagem3").click(function () {
+            var emoji = $(this).val();
+            inputDaMensagem.value += emoji;
+            console.log(`Emoji: ${inputDaMensagem.value}`);
+        });
+    });
+
+    //-----------------------------------------------------------------------------------------------
+
+    /*function verificaAdmins(){//duvida aqui para saber se preciso de arranjar forma de voltar a adicionar o chat PERGUNTAR IMPORTANTE
+            var numero_de_admins=Math.floor(Math.random() * 10);// vai de 0 a 9 os numeros
+            if(numero_de_admins===0){
+              var element = document.getElementById("para_apagar");//ADICIONAR A UI  O NUMERO DE ADMINS DUVIDA
+              element.parentNode.removeChild(element)
+            }
+          }
+          function elimina_menssagens(){
+            todas_as_mensagens_client.pop();
+          }*/
+</script>

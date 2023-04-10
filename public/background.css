@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@100;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(backgroundSquares.png);
+    background-size: cover;
+    background-repeat: repeat-y;;
+    background-position: center center;
+    height: 100vh;
+    font-family: "Encode Sans SC", sans-serif !important;
+}
+
+.nav-link:not([data-attr="img"]) {
+    border-bottom: 3px solid transparent;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+
+.nav-link:hover:not([data-attr="img"]) {
+    border-bottom: 3px solid #3981a9;
+}
+
+.nav-link:active:not([data-attr="img"]) {
+    border-bottom: 3px solid #3981a9;
+}
+
+.ParaImg:hover {
+    opacity: 0.6;
+}

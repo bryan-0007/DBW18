@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+        <link rel="stylesheet" href="logReg.css" />
+        <title>Tickets</title>
+    </head>
+    <body>
+        <%- include('./partials/nav_header') %>
+        <div class="content">
+            <div class="main" style="margin: 20px !important; position: relative; bottom: 50px;">
+                <h1 style="margin-bottom: 0px !important">
+                    <strong>Tickets</strong>
+                </h1>
+                <form class="needs-validation" action="/tickets" method="POST">
+                    <div class="form-group was-validated">
+                        <label class="form-label" for="titulo">Titulo:</label>
+                        <input
+                            class="form-control"
+                            id="titulo"
+                            type="name"
+                            name="Titulo"
+                            placeholder="Encomenda não enviada"
+                            required
+                        />
+                        <div class="invalid-feedback" style="font-weight: bold">
+                            *Please enter your title
+                        </div>
+                    </div>
+                    <div class="form-group was-validated">
+                        <label class="form-label" for="descricao"
+                            >Descrição:</label
+                        >
+                        <input
+                            class="form-control"
+                            id="descricao"
+                            type="name"
+                            name="Descricao"
+                            placeholder="Uma pergunta pertinente"
+                            required
+                        />
+                        <div class="invalid-feedback" style="font-weight: bold">
+                            *Please enter your description
+                        </div>
+                    </div>
+                    <div class="form-group was-validated">
+                        <label for="validationCustom04" class="form-label"
+                            >Agente:</label
+                        >
+                        <select
+                            style="
+                                position: relative;
+                                right: 5px;
+                                padding: 7px;
+                                margin-top: 0px;
+                            "
+                            id="validationCustom04"
+                            type="name"
+                            name="Agente"
+                        >
+                            <option
+                                selected
+                                disabled
+                                value=""
+                                style="font-weight: lighter"
+                            >
+                                Choose an agent...
+                            </option>
+                            <% agentes.forEach(agente => { %>
+                            <option style="font-weight: lighter">
+                                <%= agente.email %>
+                            </option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <button
+                        class="button-blue"
+                        style="margin-top: 0px !important"
+                    >
+                        SUBMIT
+                    </button>
+                </form>
+            </div>
+        </div>
+        <%- include('./partials/nav_footer') %>
+    </body>
+</html>

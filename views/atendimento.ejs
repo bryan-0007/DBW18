@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="chat.css">
+        <%- include('./partials/head') %>
+        <title>Atendimento</title>
+    </head>
+    <body>
+        <%- include('./partials/nav_header') %>
+        <div class="content" style="position: relative; top: 235px;">
+            <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="100"
+            height="40"
+            fill="currentColor"
+            class="bi bi-person-circle"
+            viewBox="0 0 16 16"
+        >
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path
+                fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            />
+        </svg>
+        <span><%=n_logados%></span>
+
+        <%- include('./partials/nav_footer') %>
+
+        <div id="para_apagar" class="chat_window">
+            <div class="top_menu">
+                <div class="buttons">
+                    <!------CANVAS COMEÇAS AQUI-->
+                    <button
+                        class="btn btn-warning"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight"
+                    >
+                        Emojis
+                    </button>
+                    <div
+                        class="offcanvas offcanvas-end"
+                        tabindex="-1"
+                        id="offcanvasRight"
+                        aria-labelledby="offcanvasRightLabel"
+                    >
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabel">Emojis</h5>
+                            <button
+                                type="button"
+                                class="btn-close text-reset"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <button id="emoji_sorrir" value="😀">😀</button>
+                            <button id="emoji_beijo" value="😘">😘</button>
+                            <button id="emoji_rir" value="😂">😂</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Pré Mensagens</button>
+                    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasTopLabel">Pré Mensagens</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body small">
+                        <button id="pre_mensagem1" value="Bom Dia">Bom dia</button>
+                        <button id="pre_mensagem2" value="Boa Noite">Boa noite</button>
+                        <button id="pre_mensagem3" value="Boa Tarde">Boa Tarde</button>
+                    </div>
+                    </div>
+                </div>
+                <!-----FIM DA CANVAS---------------------------------------->
+                <div class="title">Chat</div>
+            </div>
+            <ul id="contentor_de_mensagem" class="messages"></ul>
+            <!-- é aqui para onde as mensagens vao-->
+            <div class="bottom_wrapper clearfix">
+                <div class="message_input_wrapper">
+                    <input
+                        id="input_da_mensagem"
+                        class="message_input"
+                        placeholder="Type your message here..."
+                    />
+                </div>
+                <div id="enviar_mensagem" class="send_message">
+                    <div class="icon"></div>
+                    <div class="text">Send</div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('./partials/nav_footer') %>
+        <div
+            class="offcanvas offcanvas-start"
+            tabindex="-1"
+            id="offcanvasWithBackdrop"
+            aria-labelledby="offcanvasWithBackdropLabel"
+        >
+            <div class="offcanvas-header">
+                <button
+                    type="button"
+                    class="btn-close text-reset"
+                    data-bs-dismiss="offcanvas"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="botao_do_filipi">
+                    <form class="needs-validation" action="/atendimento_agente_tickets" method="POST">
+                        <h5
+                            class="offcanvas-title"
+                            id="offcanvasWithBackdropLabel"
+                        >
+                            Ticket
+                        </h5>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail2" class="form-label"
+                                >Título</label
+                            >
+                            <input
+                                name="Titulo"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputEmail2"
+                                aria-describedby="emailHelp"
+                            />
+                        </div>
+                        <div class="form-group was-validated">
+                            <label
+                                for="exampleInputPassword2"
+                                class="form-label"
+                                >Descrição</label
+                            >
+                            <input
+                                name="Descricao"
+                                type="text"
+                                class="form-control"
+                                id="exampleInputPassword2"
+                                required
+                            />
+                            <div class="invalid-feedback" style="font-weight: bold">
+                                *Please enter your Description
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="validationCustom04" class="form-label"
+                                >Agente:</label
+                            >
+                            <select
+                                style="position: relative; padding: 7px; margin-bottom: 25px;"
+                                id="validationCustom04"
+                                type="name"
+                                name="Agente"
+                            >
+                                <option selected disabled value="" style="font-weight: lighter">
+                                    Choose an agent...
+                                </option>
+                                <% agentes.forEach(agente => { %>
+                                    <option style="font-weight: lighter"><%= agente.email %></option> 
+                                <% }) %>
+                                <option style="font-weight: lighter" value="">
+                                    Pool partilhada
+                                </option>
+                            </select>
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <%- include('./partials/atendimento_js') %> 
+
+    </body>
+</html>
