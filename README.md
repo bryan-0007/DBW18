@@ -1,4 +1,4 @@
-# Projeto DBW8
+# Projeto DBW18
 
 Este projeto é um website desenvolvido com Node.js, Express e MongoDB. Ele possui recursos como autenticação, gerenciamento de perguntas frequentes (FAQ) e tickets e atendimento ao cliente.
 
@@ -12,7 +12,7 @@ Este projeto é um website desenvolvido com Node.js, Express e MongoDB. Ele poss
 1. Clone este repositório:
 
 ```bash
-git clone https://github.com/seu_usuario/yt.git
+git clone https://github.com/bryan-0007/DBW18.git
 ```
 
 2. Instale as dependências do projeto:
@@ -53,7 +53,7 @@ Agora, acesse `http://localhost:3000` no browser para ver o website em execuçã
 ## Contas para Teste
 
 ### Conta do Agente
-- `E-mail:` Admin@gmail.com
+- `E-mail:` admin@gmail.com
 - `Senha:` 123
 
 ### Conta do Usuário
